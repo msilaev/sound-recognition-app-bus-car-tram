@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+<body>
+{% block app_content %}
+<head>
+    <title>Upload File</title>
+</head>
+
+<div class="container d-flex flex-column align-items-center">
+
+    <div class="row mt-1">
+        <div class="col-md-12">
+    <h1>Upload audio file</h1>
+        </div>
+    </div>
+
+     <form method="POST"  enctype="multipart/form-data" onsubmit="return validateForm()">
+     <div class="row mt-1">
+        <div class="col-md-12">
+    <input type="file" name="file" id="fileInput">
+                </div>
+    </div>
+
+     <div class="row mt-1">
+        <div class="col-md-12">
+        <input type="submit" value="Upload">
+                 </div>
+    </div>
+          </form>
+
+    <div id="errorMessage" style="display: none; color: red;"></div>
+
+   </body>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   function validateForm() {
+    var fileInput = document.getElementById('fileInput');
+    var allowedExtensions = /(\.wav)$/i; // Regular expression to match .wav extension
+
+    if (fileInput.files.length === 0) {
+        alert("Please choose a file.");
+        return false;  // Prevent form submission if no file chosen
+    }
+
+    // Get the selected file
+    var selectedFile = fileInput.files[0];
+
+    // Check file size
+    var fileSizeMB = selectedFile.size / (1024 * 1024); // Calculate file size in MB
+    if (fileSizeMB > 10) {
+        alert("File size exceeds the limit of 10 MB.");
+        return false; // Prevent form submission if file size exceeds 10 MB
+    }
+
+    // Check the file extension against the allowed extensions
+    if (!allowedExtensions.test(selectedFile.name)) {
+        alert("Please select a WAV file.");
+        return false; // Prevent form submission if file extension is not .wav
+    }
+
+    // File is chosen, within size limit, and has a .wav extension
+    return true; // Allow form submission
+}
+</script>
+{% endblock %}
