@@ -71,14 +71,14 @@ def file_upload():
                 result = Result()
                 result.result = predict[0]
 
-            return redirect(url_for('report'))
+            return redirect(url_for('report', predict = predict[0] ))
 
         except Exception as e:
             return jsonify({'error': str(e)})
 
     return render_template('upload.html')
 
-@app.route('/report')
-def report():
-   result = Result()
-   return render_template("report.html", result = result.result)
+@app.route('/report/<predict>')
+def report(predict):
+   #result = Result()
+   return render_template("report.html", result = predict)
