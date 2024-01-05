@@ -45,6 +45,8 @@ def file_upload():
 
                 y, sr = lb.load(audio, sr = None)
 
+                os.remove(audio)
+
                 num_mfcc = 13
                 duration = 5
                 features = Features( num_mfcc, duration, y, sr)
